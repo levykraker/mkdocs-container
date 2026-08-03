@@ -1,8 +1,16 @@
-FROM python:3.14
+FROM python:3.14.6-slim
 
 WORKDIR /usr/local/app
 
 COPY requirements.txt ./
+
+RUN python -m ensurepip --upgrade
+
+RUN pip install --upgrade pip
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends git && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN pip install --no-cache-dir -r requirements.txt
 
